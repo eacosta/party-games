@@ -77,6 +77,7 @@ export default function Beopardy({ socket, me, members, game }: GameProps) {
   const [finalWagerInput, setFinalWagerInput] = useState("");
   const [finalAnswerInput, setFinalAnswerInput] = useState("");
   const [remaining, setRemaining] = useState(60);
+  const [showConfetti, setShowConfetti] = useState(false);
 
   // Private answer feed (only the verifier ever receives this).
   useEffect(() => {
