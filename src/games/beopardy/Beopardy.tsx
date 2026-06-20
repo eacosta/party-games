@@ -366,6 +366,8 @@ export default function Beopardy({ socket, me, members, game }: GameProps) {
           </div>
         )}
 
+        {showConfetti && <Confetti />}
+
         {verifierCard}
       </div>
     );
