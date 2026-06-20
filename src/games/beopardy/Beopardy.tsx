@@ -121,6 +121,14 @@ export default function Beopardy({ socket, me, members, game }: GameProps) {
     if (phase === "gameover") playFanfare();
   }, [phase]);
 
+  // Show confetti burst when the game enters the judging phase.
+  useEffect(() => {
+    if (phase !== "judging") return;
+    setShowConfetti(true);
+    const t = setTimeout(() => setShowConfetti(false), 2500);
+    return () => clearTimeout(t);
+  }, [phase]);
+
   const playerList = Object.entries(players)
     .map(([key, p]) => ({ key, ...p }))
     .sort((a, b) => b.score - a.score);
