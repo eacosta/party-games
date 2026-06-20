@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import type { GameProps } from "../registry";
 import { playBuzz, playCorrect, playWrong, playFanfare } from "@/lib/sounds";
+import Confetti from "./Confetti";
 
 interface BPlayer {
   name: string;
