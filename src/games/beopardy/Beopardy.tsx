@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import type { GameProps } from "../registry";
 import { playBuzz, playCorrect, playWrong, playFanfare } from "@/lib/sounds";
+import Confetti from "./Confetti";
 
 interface BPlayer {
   name: string;
@@ -76,6 +77,7 @@ export default function Beopardy({ socket, me, members, game }: GameProps) {
   const [finalWagerInput, setFinalWagerInput] = useState("");
   const [finalAnswerInput, setFinalAnswerInput] = useState("");
   const [remaining, setRemaining] = useState(60);
+  const [showConfetti, setShowConfetti] = useState(false);
 
   // Private answer feed (only the verifier ever receives this).
   useEffect(() => {
@@ -117,6 +119,14 @@ export default function Beopardy({ socket, me, members, game }: GameProps) {
 
   useEffect(() => {
     if (phase === "gameover") playFanfare();
+  }, [phase]);
+
+  // Show confetti burst when the game enters the judging phase.
+  useEffect(() => {
+    if (phase !== "judging") return;
+    setShowConfetti(true);
+    const t = setTimeout(() => setShowConfetti(false), 2500);
+    return () => clearTimeout(t);
   }, [phase]);
 
   const playerList = Object.entries(players)
@@ -355,6 +365,8 @@ export default function Beopardy({ socket, me, members, game }: GameProps) {
             </p>
           </div>
         )}
+
+        {showConfetti && <Confetti />}
 
         {verifierCard}
       </div>
